@@ -39,8 +39,9 @@ namespace Web_Crawler
             {
                 string src = img.GetAttributeValue("src", string.Empty);
                 string widoltski = img.GetAttributeValue("width", string.Empty);
+                string hidolfski = img.GetAttributeValue("height", string.Empty);
                 imgList.Add(src);
-                Console.WriteLine(src+", "+widoltski);
+                Console.WriteLine(src+", width:"+widoltski+ ", height:"+hidolfski);
             }
 
             var urls = htmlDoc.DocumentNode.Descendants("img")
@@ -50,11 +51,40 @@ namespace Web_Crawler
             var meta = htmlDoc.DocumentNode.SelectNodes("/ html[1] / head[1] / meta[5]");
 
             Console.WriteLine(meta);
+        }
 
-            
+        public string getTitle(string url)
+        {
 
+        }
 
+        public List<string> getHyperlink(string url)
+        {
 
+        } 
+
+        public List<Image> getImages(string url)
+        {
+
+        }
+
+        public List<Metadata> getMeta(string url)
+        {
+
+        }
+
+        class Image
+        {
+            string name;
+            string width;
+            string height;
+            string alt;
+        }
+
+        class Metadata
+        {
+            string description;
+            List<string> keywords;
         }
     }
 }
