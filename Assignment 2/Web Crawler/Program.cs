@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
 
 namespace Web_Crawler
 {
@@ -10,6 +11,50 @@ namespace Web_Crawler
     {
         static void Main(string[] args)
         {
+            List<string> cbl_items = new List<string>();
+            List<string> imgList = new List<string>();
+            var html = @"https://420chan.org/";
+
+            HtmlWeb web = new HtmlWeb();
+
+            var htmlDoc = web.Load(html);
+
+            Console.WriteLine(htmlDoc.DocumentNode.OuterHtml);
+
+            var node = htmlDoc.DocumentNode.SelectSingleNode("//head/title");
+
+            Console.WriteLine("Node Name: " + node.Name + "\n" + node.InnerHtml);
+            Console.WriteLine();
+
+            foreach (HtmlNode link in htmlDoc.DocumentNode.SelectNodes("//a"))
+            {
+                // Get the value of the HREF attribute
+                string hrefValue = link.GetAttributeValue("href", string.Empty);
+                cbl_items.Add(hrefValue);
+                Console.WriteLine(hrefValue);
+            }
+
+            
+            foreach (HtmlNode img in htmlDoc.DocumentNode.SelectNodes("//img[@src]"))
+            {
+                string src = img.GetAttributeValue("src", string.Empty);
+                string widoltski = img.GetAttributeValue("width", string.Empty);
+                imgList.Add(src);
+                Console.WriteLine(src+", "+widoltski);
+            }
+
+            var urls = htmlDoc.DocumentNode.Descendants("img")
+                                .Select(e => e.GetAttributeValue("src", null))
+                                .Where(s => !String.IsNullOrEmpty(s));
+
+            var meta = htmlDoc.DocumentNode.SelectNodes("/ html[1] / head[1] / meta[5]");
+
+            Console.WriteLine(meta);
+
+            
+
+
+
         }
     }
 }
