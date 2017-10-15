@@ -33,8 +33,8 @@ namespace Web_Crawler
             while (unvisitedURLs.Count > 0) 
             {
                 //take URL from list
-                var url = unvisitedURLs.ElementAt(unvisitedURLs.Count);
-                unvisitedURLs.RemoveAt(unvisitedURLs.Count);
+                var url = unvisitedURLs.ElementAt(unvisitedURLs.Count-1);
+                unvisitedURLs.RemoveAt(unvisitedURLs.Count-1);
                 //use SpiderLeg to fetch content
                 var leg = new SpiderLeg(url.url);
                 //if content of url is HTML
@@ -45,7 +45,7 @@ namespace Web_Crawler
                     foreach (string link in links) 
                     {   
                         //it matches the rules and not already visited or in the unvisited list
-                        if ()
+                        if (true)
                         {
                             //add it to the unvisited list
 
@@ -57,6 +57,10 @@ namespace Web_Crawler
 
         static void Main(string[] args)
         {
+            var guiForm = new CrawlerGUI();
+            //This "opens" the GUI on your screen
+            guiForm.ShowDialog();
+
             List<string> list = new List<string>();
             list.Add("http://www.newworld.co.nz/");
 
