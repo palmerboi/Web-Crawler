@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrawlerGUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrawlerGUI.Designer.cs">
+      <DependentUpon>CrawlerGUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
