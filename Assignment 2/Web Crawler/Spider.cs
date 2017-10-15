@@ -13,7 +13,8 @@ namespace Web_Crawler
 
         static void Main(string[] args)
         {
-         
+            var GUI = new CrawlerGUI();
+            GUI.ShowDialog();
         }
     }
 }
