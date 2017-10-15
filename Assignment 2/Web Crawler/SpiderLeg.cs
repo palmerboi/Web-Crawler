@@ -26,7 +26,7 @@ namespace Web_Crawler
             }
             catch (Exception)
             {
-                Console.WriteLine("You suck");
+                //Console.WriteLine("You suck");
             }
             URLs = new List<string>();
             metaData = new Metadata();
@@ -65,6 +65,11 @@ namespace Web_Crawler
         //    }
         //}
 
+        public HtmlDocument getDocument()
+        {
+            return this.htmlDoc;
+        }
+
         public string getTitle()
         {
             var node = htmlDoc.DocumentNode.SelectSingleNode("//head/title");
@@ -72,7 +77,7 @@ namespace Web_Crawler
             return title;
         }
 
-        public void getHyperlink()
+        public List<string> getHyperlinks()
         {
             foreach (HtmlNode link in htmlDoc.DocumentNode.SelectNodes("//a"))
             {
@@ -83,6 +88,7 @@ namespace Web_Crawler
                     URLs.Add(hrefValue);
                 }
             }
+            return URLs;
         }
 
         public void getImages()
