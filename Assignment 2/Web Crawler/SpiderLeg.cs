@@ -147,5 +147,18 @@ namespace Web_Crawler
                 keywords = new List<string>();
             }
         }
+
+        public void loadNewURL(string url)
+        {
+            this.url = url;
+            try
+            {
+                htmlDoc = web.Load(url);
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine("You suck");
+            }
+        }
     }
 }
