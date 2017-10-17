@@ -31,7 +31,7 @@
             this.urlEntry1 = new System.Windows.Forms.TextBox();
             this.keywordEntry = new System.Windows.Forms.TextBox();
             this.SearchButton = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.DisplayBox = new System.Windows.Forms.TextBox();
             this.urlEntry2 = new System.Windows.Forms.TextBox();
             this.urlEntry3 = new System.Windows.Forms.TextBox();
             this.depthEntry = new System.Windows.Forms.TextBox();
@@ -67,14 +67,15 @@
             this.SearchButton.UseVisualStyleBackColor = true;
             this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click_1);
             // 
-            // textBox2
+            // DisplayBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(267, 26);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(464, 149);
-            this.textBox2.TabIndex = 4;
+            this.DisplayBox.Location = new System.Drawing.Point(267, 26);
+            this.DisplayBox.Multiline = true;
+            this.DisplayBox.Name = "DisplayBox";
+            this.DisplayBox.ReadOnly = true;
+            this.DisplayBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.DisplayBox.Size = new System.Drawing.Size(464, 306);
+            this.DisplayBox.TabIndex = 4;
             // 
             // urlEntry2
             // 
@@ -155,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 208);
+            this.ClientSize = new System.Drawing.Size(737, 344);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -165,7 +166,7 @@
             this.Controls.Add(this.depthEntry);
             this.Controls.Add(this.urlEntry3);
             this.Controls.Add(this.urlEntry2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.DisplayBox);
             this.Controls.Add(this.SearchButton);
             this.Controls.Add(this.keywordEntry);
             this.Controls.Add(this.urlEntry1);
@@ -180,7 +181,7 @@
         private System.Windows.Forms.TextBox urlEntry1;
         private System.Windows.Forms.TextBox keywordEntry;
         private System.Windows.Forms.Button SearchButton;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox DisplayBox;
         private System.Windows.Forms.TextBox urlEntry2;
         private System.Windows.Forms.TextBox urlEntry3;
         private System.Windows.Forms.TextBox depthEntry;
