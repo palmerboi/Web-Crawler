@@ -51,5 +51,10 @@ namespace Web_Crawler
             HashSet<string> visitedUrls = spider.getVisitedUrls();
 
         }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            DisplayBox.Clear();
+        }
     }
 }
