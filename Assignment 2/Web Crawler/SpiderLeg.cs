@@ -79,15 +79,22 @@ namespace Web_Crawler
 
         public List<string> getHyperlinks()
         {
-            foreach (HtmlNode link in htmlDoc.DocumentNode.SelectNodes("//a"))
+            try
             {
-                // Get the link text in the href attribute
-                string hrefValue = link.GetAttributeValue("href", string.Empty);
-                if (hrefValue.Contains("http")) // make sure its a URL
+                foreach (HtmlNode link in htmlDoc.DocumentNode.SelectNodes("//a"))
                 {
-                    URLs.Add(hrefValue);
+                    // Get the link text in the href attribute
+                    string hrefValue = link.GetAttributeValue("href", string.Empty);
+                    if (hrefValue.Contains("http")) // make sure its a URL
+                    {
+                        URLs.Add(hrefValue);
+                    }
                 }
             }
+            catch
+            {
+            }
+
             return URLs;
         }
 
@@ -103,7 +110,7 @@ namespace Web_Crawler
             }
         }
 
-        public void getMeta()
+        public List<string> getMeta()
         {
             string description = string.Empty;
             string keywords = string.Empty;
@@ -126,6 +133,8 @@ namespace Web_Crawler
             {
                 metaData.keywords.Add(keyword);
             }
+
+            return metaData.keywords;
         }
 
         //represents an image file from a html document

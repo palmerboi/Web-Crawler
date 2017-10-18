@@ -9,14 +9,14 @@ namespace Web_Crawler
     class Spider
     {
         private List<string> unvisitedURLs;
-        private SortedSet<string> visitedURLs;
+        private HashSet<string> visitedURLs;
         private int maxSearchDepth;
         string keyword;
 
         public Spider(List<string> seedURLs, string keyword, int depth)
         {
             unvisitedURLs = new List<string>();
-            visitedURLs = new SortedSet<string>();
+            visitedURLs = new HashSet<string>();
             this.keyword = keyword;
             maxSearchDepth = depth;
 
@@ -41,16 +41,24 @@ namespace Web_Crawler
                 urlsAtCurrrentDepthLevel--;
                 //use SpiderLeg to fetch content
                 var leg = new SpiderLeg(URL);
+
+                //Console.WriteLine(leg.getDocument().DocumentNode.OuterHtml);
+                //Console.WriteLine();
+
                 //if content of url is HTML
-                if (!leg.getDocument().Equals(null)) 
+                if (leg.getDocument() != null) 
                 {
                     //use SpiderLeg to parse out URLs from links
                     var links = leg.getHyperlinks();
                     
                     foreach (string link in links)
-                    { 
+                    {
+                        List<string> keywords = leg.getMeta();
                         //it matches the rules and not already visited or in the unvisited list
-                        if (currentDepthLevel+1 <= maxSearchDepth && !visitedURLs.Contains(link) && !unvisitedURLs.Contains(link))
+                        if (currentDepthLevel+1 <= maxSearchDepth 
+                            && !visitedURLs.Contains(link) 
+                            && !unvisitedURLs.Contains(link)
+                            && keywords.Contains(keyword))
                         {
                             //add it to the unvisited list
                             unvisitedURLs.Add(link);
@@ -74,9 +82,9 @@ namespace Web_Crawler
             //guiForm.ShowDialog();
 
             List<string> list = new List<string>();
-            list.Add("http://www.newworld.co.nz/");
+            list.Add("https://msdn.microsoft.com/en-us/library/x9fsa0sw(v=vs.100).aspx");
 
-            Spider spider = new Spider(list, "chicken", 3);
+            Spider spider = new Spider(list, "chicken", 2);
 
             spider.crawl();
 
@@ -86,6 +94,10 @@ namespace Web_Crawler
             }
         }
 
+        public HashSet<string> getVisitedUrls()
+        {
+            return visitedURLs;
+        }
         //public class URL
         //{
         //    public string url { get; set; }
