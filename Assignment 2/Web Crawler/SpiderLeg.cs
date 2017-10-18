@@ -131,7 +131,7 @@ namespace Web_Crawler
             string[] keywordsarray = keywords.Split(',');
             foreach(string keyword in keywordsarray)
             {
-                metaData.keywords.Add(keyword);
+                metaData.keywords.Add(keyword.ToLower());
             }
 
             return metaData.keywords;
