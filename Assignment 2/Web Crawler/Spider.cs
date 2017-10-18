@@ -42,9 +42,6 @@ namespace Web_Crawler
                 //use SpiderLeg to fetch content
                 var leg = new SpiderLeg(URL);
 
-                //Console.WriteLine(leg.getDocument().DocumentNode.OuterHtml);
-                //Console.WriteLine();
-
                 //if content of url is HTML
                 if (leg.getDocument() != null) 
                 {
@@ -53,16 +50,18 @@ namespace Web_Crawler
                     
                     foreach (string link in links)
                     {
-                        List<string> keywords = leg.getMeta();
+                        //List<string> keywords = leg.getMeta();
                         //it matches the rules and not already visited or in the unvisited list
                         if (currentDepthLevel+1 <= maxSearchDepth 
                             && !visitedURLs.Contains(link) 
-                            && !unvisitedURLs.Contains(link)
-                            && keywords.Contains(keyword))
+                            && !unvisitedURLs.Contains(link))
+                            //&& keywords.Contains(keyword))
                         {
                             //add it to the unvisited list
                             unvisitedURLs.Add(link);
                             urlsAtNextDepthLevel++;
+                            //Console.WriteLine(leg.getDocument().DocumentNode.OuterHtml);
+                            //Console.WriteLine();
                         }
                     }
                 }
@@ -77,14 +76,14 @@ namespace Web_Crawler
 
         static void Main(string[] args)
         {
-            var guiForm = new CrawlerGUI();
-            ////This "opens" the GUI on your screen
-            guiForm.ShowDialog();
+            //var guiForm = new CrawlerGUI();
+            //////This "opens" the GUI on your screen
+            //guiForm.ShowDialog();
 
             List<string> list = new List<string>();
-            list.Add("https://msdn.microsoft.com/en-us/library/x9fsa0sw(v=vs.100).aspx");
+            list.Add("http://www.newworld.co.nz/");
 
-            Spider spider = new Spider(list, "chicken", 2);
+            Spider spider = new Spider(list, "chicken", 5);
 
             spider.crawl();
 
