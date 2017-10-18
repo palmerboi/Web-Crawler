@@ -69,9 +69,9 @@ namespace Web_Crawler
 
         static void Main(string[] args)
         {
-            //var guiForm = new CrawlerGUI();
+            var guiForm = new CrawlerGUI();
             ////This "opens" the GUI on your screen
-            //guiForm.ShowDialog();
+            guiForm.ShowDialog();
 
             List<string> list = new List<string>();
             list.Add("http://www.newworld.co.nz/");
