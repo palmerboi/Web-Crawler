@@ -98,24 +98,24 @@ namespace Web_Crawler
             }
         }
 
-        static void Main(string[] args)
-        {
-            //var guiForm = new CrawlerGUI();
-            //////This "opens" the GUI on your screen
-            //guiForm.ShowDialog();
+        //static void Main(string[] args)
+        //{
+        //    //var guiForm = new CrawlerGUI();
+        //    //////This "opens" the GUI on your screen
+        //    //guiForm.ShowDialog();
 
-            List<string> list = new List<string>();
-            list.Add("http://www.newworld.co.nz/");
+        //    List<string> list = new List<string>();
+        //    list.Add("http://www.newworld.co.nz/");
 
-            Spider spider = new Spider(list, "grocery", 3);
+        //    Spider spider = new Spider(list, "grocery", 3);
 
-            spider.crawl();
+        //    spider.crawl();
 
-            foreach (string url in spider.visitedURLs)
-            {
-                Console.WriteLine(url);
-            }
-        }
+        //    foreach (string url in spider.visitedURLs)
+        //    {
+        //        Console.WriteLine(url);
+        //    }
+        //}
 
         public HashSet<string> getVisitedUrls()
         {

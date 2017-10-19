@@ -62,12 +62,12 @@ namespace Web_Crawler
             }
         }
 
-        // static void Main(string[] args)
-        //{
-        //    var guiForm = new CrawlerGUI();
-        //    //This "opens" the GUI on your screen
-        //    guiForm.ShowDialog();
-        //}
+        static void Main(string[] args)
+        {
+            var guiForm = new CrawlerGUI();
+            //This "opens" the GUI on your screen
+            guiForm.ShowDialog();
+        }
         //Button to clear text
         private void clearBtn_Click(object sender, EventArgs e)
         {
