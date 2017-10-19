@@ -27,7 +27,7 @@ namespace Web_Crawler
             {
                 unvisitedURLs.Add(seed);
             }
-
+            //clear the file of previous text
             System.IO.File.WriteAllText(@"C:\Users\Public\RelevantURLs.txt", string.Empty);
         }
 
@@ -98,25 +98,7 @@ namespace Web_Crawler
             }
         }
 
-        //static void Main(string[] args)
-        //{
-        //    //var guiForm = new CrawlerGUI();
-        //    //////This "opens" the GUI on your screen
-        //    //guiForm.ShowDialog();
-
-        //    List<string> list = new List<string>();
-        //    list.Add("http://www.newworld.co.nz/");
-
-        //    Spider spider = new Spider(list, "grocery", 3);
-
-        //    spider.crawl();
-
-        //    foreach (string url in spider.visitedURLs)
-        //    {
-        //        Console.WriteLine(url);
-        //    }
-        //}
-
+        //returns list of urls containing searched keyword in their metatag keywords
         public HashSet<string> getVisitedRelevantUrls()
         {
             return relevantUrls;

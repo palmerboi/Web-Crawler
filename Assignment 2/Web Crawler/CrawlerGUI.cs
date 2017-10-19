@@ -12,58 +12,86 @@ namespace Web_Crawler
 {
     public partial class CrawlerGUI : Form
     {
+        private readonly System.Threading.SynchronizationContext synchronizationContext;
+
         public CrawlerGUI()
         {
             InitializeComponent();
+            synchronizationContext = System.Threading.SynchronizationContext.Current;
         }
 
-        private void SearchButton_Click_1(object sender, EventArgs e)
+        //event handler if search button is clicked
+        private async void SearchButton_Click_1(object sender, EventArgs e)
         {
             //condition statements if required input is not there
             int value = 0;
-            if (string.IsNullOrEmpty(urlEntry1.Text) || string.IsNullOrEmpty(keywordEntry.Text) || string.IsNullOrEmpty(depthEntry.Text))
+            if ((string.IsNullOrEmpty(urlEntry1.Text) && string.IsNullOrEmpty(urlEntry2.Text) && string.IsNullOrEmpty(urlEntry3.Text)) 
+                || string.IsNullOrEmpty(keywordEntry.Text) || string.IsNullOrEmpty(depthEntry.Text))
             {
-                MessageBox.Show("Please enter at least 1 Url & 1 Keyword & depth value ", "", MessageBoxButtons.OK);
+                MessageBox.Show("Please enter at least one Url, keyword and search depth value", "", MessageBoxButtons.OK);
+            }
+            else if (int.Parse(depthEntry.Text) < 1 || int.Parse(depthEntry.Text) > 10)
+            {
+                MessageBox.Show("Please enter a search depth between 1 and 10", "", MessageBoxButtons.OK);
             }
             else
             {
+
+                DisplayBox.Text += "Beginning Search, Please wait..." + Environment.NewLine;
+                //A list containing the urls
+                List<string> urls = new List<string>();
+                urls.Add(urlEntry1.Text);
+                urls.Add(urlEntry2.Text);
+                urls.Add(urlEntry3.Text);
+
                 value = int.Parse(depthEntry.Text);
-                if (value <= 0 || value > 20)
-                {
-                    MessageBox.Show("Please enter a depth in between 1 and 20", "", MessageBoxButtons.OK);
-                }
-            }
-            //A list containing the urls
-            List<string> urls = new List<string>();
-            urls.Add(urlEntry1.Text);
-            urls.Add(urlEntry2.Text);
-            urls.Add(urlEntry3.Text);
-            
-            //uses the spider to search the pages for the keyword
-            Spider spider = new Spider(urls, keywordEntry.Text, value);
-            spider.crawl();
-            HashSet<string> visitedUrls = spider.getVisitedRelevantUrls();
-            foreach(string visitedUrl in visitedUrls)
-            {
-                DisplayBox.Text += visitedUrl +Environment.NewLine;
 
-                if(visitedUrls == null)
+                //uses the spider to search for pages containing the keyword
+                Spider spider = new Spider(urls, keywordEntry.Text, value);
+
+                //enables gui to remain responsive during search for relevant URLs
+                await Task.Run(() =>
                 {
-                    MessageBox.Show("No results found", "", MessageBoxButtons.OK);
-                }
+                    spider.crawl();
+                    //retrieve search results and display them in display box
+                    HashSet<string> visitedUrls = spider.getVisitedRelevantUrls();
+                    if (visitedUrls.Count == 0)
+                    {
+                        MessageBox.Show("No results found", "", MessageBoxButtons.OK);
+                    }
+                    else
+                    {
+                        foreach (string visitedUrl in visitedUrls)
+                        {
+                            updateUI(visitedUrl);
+                        }
+                    }
+                });
             }
         }
 
-        static void Main(string[] args)
+        //update gui via separate thread
+        public void updateUI(string visitedUrl)
         {
-            var guiForm = new CrawlerGUI();
-            //This "opens" the GUI on your screen
-            guiForm.ShowDialog();
+            synchronizationContext.Post(new System.Threading.SendOrPostCallback(o =>
+            {
+                DisplayBox.Text += visitedUrl + Environment.NewLine;
+            }), visitedUrl);
         }
-        //Button to clear text
+
+        //event handler to clear text
         private void clearBtn_Click(object sender, EventArgs e)
         {
             DisplayBox.Clear();
         }
+
+        //entry point for program, launches gui
+        static void Main(string[] args)
+        {
+            var guiForm = new CrawlerGUI();
+            guiForm.ShowDialog();
+        }
+
+        
     }
 }

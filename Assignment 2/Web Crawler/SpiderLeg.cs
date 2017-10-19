@@ -16,6 +16,7 @@ namespace Web_Crawler
         List<Image> imgList;
         Metadata metaData;
 
+        //Spiderleg constructor
         public SpiderLeg(string url)
         {
             this.url = url;
@@ -26,50 +27,20 @@ namespace Web_Crawler
             }
             catch (Exception)
             {
-                //Console.WriteLine("You suck");
+                //Dont actually need to do anything with the exception, if the document is null or url was invalid that will get checked later
             }
             URLs = new List<string>();
             metaData = new Metadata();
             imgList = new List<Image>();
         }
 
-        //static void Main(string[] args)
-        //{
-        //    SpiderLeg leg = new SpiderLeg("https://www.w3schools.com/tags/tag_meta.asp");
-
-        //    Console.WriteLine(leg.htmlDoc.DocumentNode.OuterHtml);
-        //    Console.WriteLine();
-
-        //    Console.WriteLine(leg.getTitle());
-        //    Console.WriteLine();
-
-        //    leg.getHyperlink();
-        //    foreach(String url in leg.URLs)
-        //    {
-        //        Console.WriteLine(url);
-        //    }
-        //    Console.WriteLine();
-
-        //    leg.getImages();
-        //    foreach(Image img in leg.imgList)
-        //    {
-        //        Console.WriteLine(img.name+" width: "+img.width+" height: "+img.height);
-        //    }
-        //    Console.WriteLine();
-
-        //    leg.getMeta();
-        //    Console.WriteLine("Description: "+leg.metaData.description);
-        //    foreach(string keyword in leg.metaData.keywords)
-        //    {
-        //        Console.WriteLine(keyword);
-        //    }
-        //}
-
+        //getter method for document
         public HtmlDocument getDocument()
         {
             return this.htmlDoc;
         }
 
+        //getter method for document title
         public string getTitle()
         {
             var node = htmlDoc.DocumentNode.SelectSingleNode("//head/title");
@@ -77,8 +48,10 @@ namespace Web_Crawler
             return title;
         }
 
+        //getter method for urls on the page
         public List<string> getHyperlinks()
         {
+            //if document is null it will return empty list
             try
             {
                 foreach (HtmlNode link in htmlDoc.DocumentNode.SelectNodes("//a"))
@@ -98,7 +71,8 @@ namespace Web_Crawler
             return URLs;
         }
 
-        public void getImages()
+        //getter method for list of images
+        public List<Image> getImages()
         {
             foreach (HtmlNode img in htmlDoc.DocumentNode.SelectNodes("//img[@src]"))
             {
@@ -108,36 +82,45 @@ namespace Web_Crawler
                 Image image = new Image { name = imgSource, width = imgWidth, height = imgHeight};
                 imgList.Add(image);
             }
+
+            return imgList;
         }
 
+        //getter method for metatag keywords
         public List<string> getMeta()
         {
             string description = string.Empty;
             string keywords = string.Empty;
 
-            foreach (HtmlNode meta in htmlDoc.DocumentNode.SelectNodes("//meta"))
+            try
             {
-                if (meta.GetAttributeValue("name", string.Empty).ToLower().Equals("description"))
+                foreach (HtmlNode meta in htmlDoc.DocumentNode.SelectNodes("//meta"))
                 {
-                    description = meta.GetAttributeValue("name", string.Empty);
+                    if (meta.GetAttributeValue("name", string.Empty).ToLower().Equals("description"))
+                    {
+                        description = meta.GetAttributeValue("name", string.Empty);
+                    }
+                    if (meta.GetAttributeValue("name", string.Empty).ToLower().Equals("keywords"))
+                    {
+                        keywords = meta.GetAttributeValue("content", string.Empty);
+                    }
                 }
-                if (meta.GetAttributeValue("name", string.Empty).ToLower().Equals("keywords"))
+
+                metaData.description = description;
+                string[] keywordsarray = keywords.Split(',');
+                foreach (string keyword in keywordsarray)
                 {
-                    keywords = meta.GetAttributeValue("content", string.Empty);
+                    metaData.keywords.Add(keyword.ToLower());
                 }
             }
-
-            metaData.description = description;
-            string[] keywordsarray = keywords.Split(',');
-            foreach(string keyword in keywordsarray)
+            catch
             {
-                metaData.keywords.Add(keyword.ToLower());
             }
 
             return metaData.keywords;
         }
 
-        //represents an image file from a html document
+        //innerclass represents an image file from a html document
         public class Image
         {
             public string name { get; set; }
@@ -145,7 +128,7 @@ namespace Web_Crawler
             public string height { get; set; }
         }
 
-        //represents the metadata from a html document
+        //innerclass represents the metadata from a html document
         public class Metadata
         {
             public string description;
