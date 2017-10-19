@@ -30,14 +30,15 @@ namespace Web_Crawler
             {
                 MessageBox.Show("Please enter at least one Url, keyword and search depth value", "", MessageBoxButtons.OK);
             }
-            else if (int.Parse(depthEntry.Text) < 1 || int.Parse(depthEntry.Text) > 10)
+            else if (int.Parse(depthEntry.Text) < 1 || int.Parse(depthEntry.Text) > 4)
             {
-                MessageBox.Show("Please enter a search depth between 1 and 10", "", MessageBoxButtons.OK);
+                MessageBox.Show("Please enter a search depth between 1 and 4", "", MessageBoxButtons.OK);
             }
             else
             {
-
+                //alert user search is beginning
                 DisplayBox.Text += "Beginning Search, Please wait..." + Environment.NewLine;
+
                 //A list containing the urls
                 List<string> urls = new List<string>();
                 urls.Add(urlEntry1.Text);
