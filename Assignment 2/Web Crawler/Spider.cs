@@ -117,9 +117,9 @@ namespace Web_Crawler
         //    }
         //}
 
-        public HashSet<string> getVisitedUrls()
+        public HashSet<string> getVisitedRelevantUrls()
         {
-            return visitedURLs;
+            return relevantUrls;
         }
     }
 }
