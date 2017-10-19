@@ -38,22 +38,14 @@ namespace Web_Crawler
             urls.Add(urlEntry1.Text);
             urls.Add(urlEntry2.Text);
             urls.Add(urlEntry3.Text);
-            //displays the urls in the textbox
-            foreach (string url in urls)
-            {
-                if (!string.IsNullOrEmpty(url))
-                {
-                    DisplayBox.Text += url + Environment.NewLine;
-                }
-            }
-            DisplayBox.Text += keywordEntry.Text;
+            
             //uses the spider to search the pages for the keyword
             Spider spider = new Spider(urls, keywordEntry.Text, value);
             spider.crawl();
-            HashSet<string> visitedUrls = spider.getVisitedUrls();
+            HashSet<string> visitedUrls = spider.getVisitedRelevantUrls();
             foreach(string visitedUrl in visitedUrls)
             {
-                DisplayBox.Text += visitedUrl;
+                DisplayBox.Text += visitedUrl +Environment.NewLine;
 
                 if(visitedUrls == null)
                 {
