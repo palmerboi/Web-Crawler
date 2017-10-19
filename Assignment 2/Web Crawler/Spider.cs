@@ -10,6 +10,7 @@ namespace Web_Crawler
     {
         private List<string> unvisitedURLs;
         private HashSet<string> visitedURLs;
+        private HashSet<string> relevantUrls;
         private int maxSearchDepth;
         string keyword;
 
@@ -18,6 +19,7 @@ namespace Web_Crawler
         {
             unvisitedURLs = new List<string>();
             visitedURLs = new HashSet<string>();
+            relevantUrls = new HashSet<string>();
             this.keyword = keyword;
             maxSearchDepth = depth;
 
@@ -25,6 +27,8 @@ namespace Web_Crawler
             {
                 unvisitedURLs.Add(seed);
             }
+
+            System.IO.File.WriteAllText(@"C:\Users\Public\RelevantURLs.txt", string.Empty);
         }
 
         public void crawl()
@@ -60,7 +64,8 @@ namespace Web_Crawler
                     //check if it contains the keyword you requested
                     if (keywords.Contains(" "+keyword))
                     {
-                        //write to file if it does
+                        //write to file if it does and store in relevant urls set
+                        relevantUrls.Add(URL);
                         using (System.IO.StreamWriter file =
                         new System.IO.StreamWriter(@"C:\Users\Public\RelevantURLs.txt", true))
                         {
