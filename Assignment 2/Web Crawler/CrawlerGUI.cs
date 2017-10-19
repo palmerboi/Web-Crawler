@@ -68,10 +68,7 @@ namespace Web_Crawler
             //This "opens" the GUI on your screen
             guiForm.ShowDialog();
         }
-        //Button to clear text
-        private void clearBtn_Click(object sender, EventArgs e)
-        {
-            DisplayBox.Clear();
-        }
+        //Button to clear displayed text
+        private void clearBtn_Click(object sender, EventArgs e) => DisplayBox.Clear();
     }
 }
